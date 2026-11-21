@@ -2,7 +2,7 @@
 
 ## Platform
 
-本地单人 Web 应用，在既有 FinResearchWorkspace 项目内迭代。服务只监听本机；Python HTTP、SQLite、原生 JavaScript/CSS 保留。工作记录与审核记录保存到本机数据库，未保存表单草稿没有持久化能力。
+本地单人 Web 应用，在既有 FinResearchWorkspace 项目内迭代。服务只监听本机；Python HTTP、SQLite、原生 JavaScript/CSS 保留。工作记录与审核记录保存到本机数据库，首页未提交的表单草稿仅暂存在当前浏览器会话中，不能替代后端保存的研究记录。
 
 ## Users and job
 
