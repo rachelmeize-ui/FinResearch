@@ -3,6 +3,7 @@ Active research uses entities / annual_reports / sec_reports / research_pipeline
 No generated financial values or search-result snippets are used as financial data.
 """
 import hashlib
+import os
 import json
 import re
 import urllib.error
@@ -42,7 +43,7 @@ def extract_pair(text,key):
     return [n.group().replace(',','') for n in nums[:2]],quote
 
 def download(entry,refresh=False):
-    folder=ROOT/'data/public-reports';folder.mkdir(parents=True,exist_ok=True)
+    folder=Path(os.environ.get('FINRESEARCH_DATA_DIR',ROOT/'data'))/'public-reports';folder.mkdir(parents=True,exist_ok=True)
     path=folder/entry['filename'];meta_path=path.with_suffix('.meta.json')
     if path.exists() and meta_path.exists() and not refresh:
         raw=path.read_bytes();meta=json.loads(meta_path.read_text(encoding='utf-8'))

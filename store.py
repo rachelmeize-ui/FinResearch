@@ -13,7 +13,7 @@ def dumps(x): return json.dumps(x,ensure_ascii=False,allow_nan=False)
 
 @contextmanager
 def db():
-    path=Path(os.environ.get('FINRESEARCH_DB',ROOT/'data'/'workspace.sqlite3'))
+    path=Path(os.environ.get('FINRESEARCH_DB',Path(os.environ.get('FINRESEARCH_DATA_DIR',ROOT/'data'))/'workspace.sqlite3'))
     path.parent.mkdir(parents=True,exist_ok=True)
     c=sqlite3.connect(path,timeout=15)
     c.row_factory=sqlite3.Row

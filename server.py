@@ -1,4 +1,4 @@
-"""Loopback-only HTTP API and static client, Python stdlib + read-only openpyxl.
+"""Local-first HTTP API; remote hosting requires explicit origin and access password.
 Run: python server.py --port 8530
 """
 import argparse
@@ -16,6 +16,7 @@ import finance
 import research
 import store
 import periods
+import hosting
 from store import db, uid, now, dumps, log, records, task, detail
 
 ROOT=Path(__file__).resolve().parent
@@ -250,6 +251,7 @@ class Handler(BaseHTTPRequestHandler):
     def respond(self,status,data,ctype='application/json; charset=utf-8',filename=None):
         if not isinstance(data,bytes):data=dumps(data).encode('utf-8')
         self.send_response(status);self.send_header('Content-Type',ctype);self.send_header('Content-Length',str(len(data)))
+        if status==401:self.send_header('WWW-Authenticate','Basic realm="FinResearch", charset="UTF-8"')
         self.send_header('X-Content-Type-Options','nosniff');self.send_header('Cache-Control','no-store')
         self.send_header('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'")
         if filename:self.send_header('Content-Disposition',f'attachment; filename="{filename}"')
@@ -260,10 +262,13 @@ class Handler(BaseHTTPRequestHandler):
     def handle_request(self,method):
         try:
             host=self.headers.get('Host','')
-            if host not in [f'127.0.0.1:{self.server.server_port}',f'localhost:{self.server.server_port}']:
+            if not hosting.host_allowed(host,self.server.server_port):
                 return self.respond(403,{'error':'仅允许本机访问。'})
+            path=unquote(urlsplit(self.path).path)
+            if method=='GET' and path=='/healthz':return self.respond(200,{'status':'ok'})
+            if not hosting.authorized(self.headers.get('Authorization','')):return self.respond(401,{'error':'请使用网站所有者的账号和访问密码登录。'})
             origin=self.headers.get('Origin')
-            if method!='GET' and origin and origin not in ['http://'+host]:return self.respond(403,{'error':'请从本机工作台提交操作。'})
+            if method!='GET' and origin and origin not in ['http://'+host,hosting.origin()]:return self.respond(403,{'error':'请从当前工作台提交操作。'})
             path=unquote(urlsplit(self.path).path)
             if method=='GET' and path=='/api/template.csv':return self.respond(200,('\ufeff'+','.join(finance.ALIASES.keys())+'\n').encode('utf-8'),'text/csv; charset=utf-8','financial-template.csv')
             parts=path.strip('/').split('/')
@@ -276,7 +281,7 @@ class Handler(BaseHTTPRequestHandler):
                     return self.respond(200,raw,'application/pdf' if raw.startswith(b'%PDF') else 'application/json')
                 t=detail(parts[2]);entry=next((e for name,e in public_data.CATALOG.items() if e['code']+'.pdf'==parts[4] and name in [t['company_a'],t['company_b']]),None)
                 if not entry or not t['meta'].get('collection'):raise ValueError('该任务尚未获取对应原始披露文件。')
-                pdf=ROOT/'data/public-reports'/entry['filename']
+                pdf=Path(os.environ.get('FINRESEARCH_DATA_DIR',ROOT/'data'))/'public-reports'/entry['filename']
                 return self.respond(200,pdf.read_bytes(),'application/pdf')
             if method=='GET' and len(parts)==4 and parts[:2]==['api','tasks'] and parts[-1] in ['report.md','report.xlsx','report.html']:
                 t=detail(parts[2])
@@ -314,9 +319,10 @@ class Handler(BaseHTTPRequestHandler):
         print(self.log_date_time_string(),fmt%args,flush=True)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--port',type=int,default=8530);args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--port',type=int,default=int(os.environ.get('PORT','8530')));p.add_argument('--host',default=os.environ.get('FINRESEARCH_BIND','127.0.0.1'));args=p.parse_args()
+    hosting.validate(args.host)
     store.init()
-    s=ThreadingHTTPServer(('127.0.0.1',args.port),Handler)
+    s=ThreadingHTTPServer((args.host,args.port),Handler)
     print(f'FinResearch Workspace: http://127.0.0.1:{args.port}',flush=True)
     try:s.serve_forever()
     except KeyboardInterrupt:pass

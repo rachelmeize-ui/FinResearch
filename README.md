@@ -16,11 +16,13 @@ python -m venv .venv
 
 浏览器打开 http://127.0.0.1:8530/ ，创建研究后获取公开资料。新安装使用空白数据库，不附带个人研究或预设成功结果。公开资料检索、财务计算、来源核验和 Markdown 报告导出不需要模型密钥。
 
-**Excel 导出有额外环境要求**：Node.js 22+ 及合法可用的 `@oai/artifact-tool`。参照 [运行配置示例](runtime.example.json) 在本地建立 `runtime.local.json`，填写实际可执行文件和依赖目录；示例路径需要替换，未配置该依赖时可使用 Markdown 导出。浏览器验收脚本也依赖本地 Chrome、Playwright 和相应运行配置。Python 单元测试可执行 `python -m unittest discover -s tests -v`；新安装未包含外部资料快照，对应集成检查会明确跳过。
+Excel 默认使用可移植的 XlsxWriter 导出，不依赖桌面应用。原本机配置存在时仍保留 Node.js 22+ / `@oai/artifact-tool` 导出，可用 `FINRESEARCH_EXCEL_BACKEND=portable` 明确切换。参照 [运行配置示例](runtime.example.json) 配置原桌面路径；示例路径需要替换。浏览器验收脚本依赖本地 Chrome、Playwright 和相应运行配置。Python 单元测试可执行 `python -m unittest discover -s tests -v`；新安装未包含外部资料快照，对应集成检查会明确跳过。
 
 仓库只保存代码、文档及明确标记的测试样例，不上传密钥、运行配置、数据库、下载文件和个人报告。`examples/demo.*` 是测试数据，正式研究界面会拒绝导入模拟数据。AI 调用默认授权额度为零，配置密钥本身不会自动发起研究调用。
 
 这是需要 Python 后端的本地应用，**上传 GitHub 不等于已部署在线服务，GitHub Pages 不能运行其完整功能**。当前仅监听本机地址；如需远程运行，还需部署后端、持久化存储及身份验证。
+
+Docker 服务器配置与访问保护见 [部署说明](docs/DEPLOYMENT.md)。默认运行方式仍只接受本机访问；远程绑定没有 HTTPS 网站地址及独立访问密码时会拒绝启动。
 
 ## 运行与使用
 

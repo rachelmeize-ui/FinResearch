@@ -15,6 +15,9 @@ def runtime():
 def excel(task):
     import reporting
     task={**task,'report':reporting.state(task)}
+    if os.environ.get('FINRESEARCH_EXCEL_BACKEND')=='portable' or not (ROOT/'runtime.local.json').exists():
+        from portable_excel import excel as portable
+        return portable(task)
     cfg=runtime()
     with tempfile.TemporaryDirectory(prefix='finresearch-') as td:
         payload=Path(td)/'input.json';out=Path(td)/'report.xlsx'

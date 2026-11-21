@@ -6,6 +6,7 @@
 
 - Python 标准库：PSF 许可证；HTTP、sqlite3、Decimal、CSV、unittest。
 - openpyxl：MIT，仅读取 Excel 和独立验证导出文件；https://openpyxl.readthedocs.io/ 。
+- XlsxWriter：BSD-2-Clause，服务器版 Excel 导出；https://xlsxwriter.readthedocs.io/ 。公式计算由本项目确定性财务规则完成，同时写入公式与缓存结果。
 - pypdf：BSD-3-Clause，用于提取官方披露PDF合并财务报表；https://pypdf.readthedocs.io/ 。原公开年报版权与披露主体署名保留，来源链接、获取时间和校验值随研究记录保存。
 - Node.js：MIT 及其第三方通知。
 - @oai/artifact-tool：桌面环境提供，按其分发条款使用；不复制包源码，不宣称该包为个人作品或开源组件。移机使用须有可用的合法运行环境。

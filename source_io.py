@@ -1,9 +1,9 @@
 """Bounded public HTTPS retrieval, durable content hashes and explicit failures."""
-import hashlib,json,re,socket,ipaddress,urllib.request,urllib.parse,time,uuid
+import hashlib,json,re,socket,ipaddress,urllib.request,urllib.parse,time,uuid,os
 from pathlib import Path
 from datetime import datetime,timezone
 ROOT=Path(__file__).resolve().parent
-CACHE=ROOT/'data/research-documents'
+CACHE=Path(os.environ.get('FINRESEARCH_DATA_DIR',ROOT/'data'))/'research-documents'
 class SourceError(ValueError):pass
 def now():return datetime.now(timezone.utc).isoformat(timespec='seconds')
 def safe_url(url):
