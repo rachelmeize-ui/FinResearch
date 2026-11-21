@@ -1,0 +1,30 @@
+# Preparation only: creating this Blueprint starts a PAID service.
+# Base estimate checked 2026-11-22: $7/month compute + $0.25/month for 1 GB disk.
+services:
+  - type: web
+    name: finresearch
+    runtime: docker
+    plan: 0.5c-512mb
+    region: singapore
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeployTrigger: "off"
+    healthCheckPath: /healthz
+    disk:
+      name: finresearch-data
+      mountPath: /var/lib/finresearch
+      sizeGB: 1
+    envVars:
+      - key: FINRESEARCH_BIND
+        value: 0.0.0.0
+      - key: PORT
+        value: "10000"
+      - key: FINRESEARCH_DATA_DIR
+        value: /var/lib/finresearch
+      - key: FINRESEARCH_EXCEL_BACKEND
+        value: portable
+      - key: FINRESEARCH_ACCESS_USER
+        value: owner
+      - key: FINRESEARCH_ACCESS_PASSWORD
+        generateValue: true

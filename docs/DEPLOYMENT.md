@@ -1,5 +1,24 @@
 # 私有服务器部署
 
+## 选定方案：Render
+
+已准备根目录 `render.yaml`。方案为新加坡地区、单个 `0.5c-512mb` Web 服务和1 GB持久磁盘，沿用现有 Dockerfile。按2026-11-22官方价格，基础服务器约7美元/月，磁盘0.25美元/月，合计基础约7.25美元/月；未包含可能的税费、超额流量费和另行授权的模型费用。最终以 Render 开通页面报价为准。
+
+官方价格：https://render.com/pricing 。磁盘规则：https://render.com/docs/disks 。配置规范：https://render.com/docs/blueprint-spec 。免费实例不支持本方案需要的持久磁盘，不作为正式存储方案。
+
+配置文件本身不会开通服务或产生收费。必须先由用户确认费用、注册并登录 Render、授权读取私有 FinResearch 仓库，才可创建资源。不要仅凭“准备部署”就提交计费开通。
+
+用户确认后：
+
+1. 打开 https://dashboard.render.com/ ，使用 GitHub 注册或登录，授权读取 `rachelmeize-ui/FinResearch` 私有仓库。优先只授权此仓库，无需改为公开。
+2. 进入 **New → Blueprint**，选择 FinResearch，分支 `main`，配置路径 `render.yaml`。
+3. 核对单个服务、1 GB磁盘及实际报价。确认后创建 Blueprint；平台会生成独立访问密码。自动代码发布已关闭，后续修改需手动发布。
+4. 等部署成为 Live 后，在服务的 Environment 页面查看 `FINRESEARCH_ACCESS_PASSWORD`，只保存在本人密码管理器中，不写入 GitHub或聊天。网站账号为 `owner`。
+5. 打开平台实际返回的网站地址并登录。地址由 `RENDER_EXTERNAL_URL` 自动读取，不在代码中猜测域名。
+6. 进行云端验收：创建研究、真实获取年报、来源核对、Markdown与Excel下载、服务重启后确认记录和原始文件仍能打开。来源访问失败须保留实际原因，不以本地通过替代。
+
+截至当前，已确认 GitHub Actions 的 Linux 镜像构建、访问保护与重启保留研究均通过（运行44912630670）；尚未登录 Render、创建资源或取得正式网站地址。首次云端运行也尚未验证外部年报来源访问情况。
+
 此文件描述可运行的部署配置，**不代表已经创建云服务或获得在线网址**。需要可运行 Docker 的服务器，以及终止 HTTPS 的平台网关或反向代理。保留单实例和持久化磁盘；当前 SQLite 不支持多个独立实例共享写入。
 
 ## 服务配置
