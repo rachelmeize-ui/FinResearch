@@ -47,11 +47,16 @@ try:
     else: raise AssertionError('Private API was exposed')
     assert not request('/api/state')['tasks']
     created=request('/api/tasks',dict(title='Container persistence check',company_a='网易',company_b='',question='检查研究记录保存',dimensions=['业务'],research_type='business',start_year=2023,end_year=2025))
-    docker('restart',name);ready()
+    docker('restart',name)
+    port=docker('port',name,'10000/tcp').rsplit(':',1)[-1]
+    base='http://127.0.0.1:'+port;ready()
     saved=request('/api/tasks/'+created['id'])
     assert saved['meta']['requested_years']==[2023,2024,2025]
     assert request('/api/engine')['authorized_calls_remaining']==0
     print(json.dumps({'container_start':True,'private_access':True,'restart_keeps_research':True,'paid_calls':0}))
+except Exception:
+    subprocess.run(['docker','logs',name],check=False)
+    raise
 finally:
     subprocess.run(['docker','rm','-f',name],capture_output=True)
     subprocess.run(['docker','volume','rm',volume],capture_output=True)
