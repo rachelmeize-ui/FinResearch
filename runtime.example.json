@@ -1,0 +1,5 @@
+{
+  "python": "C:/path/to/python.exe",
+  "node": "C:/path/to/node.exe",
+  "modules": "C:/path/to/node_modules"
+}

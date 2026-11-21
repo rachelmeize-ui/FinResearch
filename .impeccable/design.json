@@ -1,0 +1,349 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-21T19:38:43+08:00",
+  "title": "Design System: FinResearch",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "ink",
+        "canonical": "#202936",
+        "source": "static/style.css: :root"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "muted",
+        "canonical": "#5b6575",
+        "source": "static/style.css: :root"
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "accent",
+        "canonical": "#234c95",
+        "source": "static/style.css: :root"
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "accent-hover",
+        "canonical": "#193b79",
+        "source": "static/style.css: :root"
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "line",
+        "canonical": "#e1e5eb",
+        "source": "static/style.css: :root"
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "canvas",
+        "canonical": "#f6f7f9",
+        "source": "static/style.css: :root"
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "white",
+        "canonical": "#fff",
+        "source": "static/style.css: :root"
+      },
+      "soft": {
+        "role": "primary",
+        "displayName": "soft",
+        "canonical": "#eef3fb",
+        "source": "static/style.css: :root"
+      },
+      "warning": {
+        "role": "secondary",
+        "displayName": "warning",
+        "canonical": "#855616",
+        "source": "static/style.css: :root"
+      },
+      "danger": {
+        "role": "secondary",
+        "displayName": "danger",
+        "canonical": "#a63030",
+        "source": "static/style.css: :root"
+      },
+      "comparison": {
+        "role": "secondary",
+        "displayName": "comparison",
+        "canonical": "#8495b4",
+        "source": "static/app.js: chart colors; static/style.css: .legend .second"
+      },
+      "control-border": {
+        "role": "neutral",
+        "displayName": "control-border",
+        "canonical": "#cdd4de",
+        "source": "static/style.css: component literal"
+      },
+      "status-neutral-bg": {
+        "role": "neutral",
+        "displayName": "status-neutral-bg",
+        "canonical": "#edf0f5",
+        "source": "static/style.css: component literal"
+      },
+      "status-neutral-text": {
+        "role": "neutral",
+        "displayName": "status-neutral-text",
+        "canonical": "#536174",
+        "source": "static/style.css: component literal"
+      },
+      "status-good-bg": {
+        "role": "secondary",
+        "displayName": "status-good-bg",
+        "canonical": "#edf5ef",
+        "source": "static/style.css: component literal"
+      },
+      "status-good-text": {
+        "role": "secondary",
+        "displayName": "status-good-text",
+        "canonical": "#366246",
+        "source": "static/style.css: component literal"
+      },
+      "status-warn-bg": {
+        "role": "secondary",
+        "displayName": "status-warn-bg",
+        "canonical": "#fbf2e3",
+        "source": "static/style.css: component literal"
+      },
+      "status-bad-bg": {
+        "role": "secondary",
+        "displayName": "status-bad-bg",
+        "canonical": "#fbecec",
+        "source": "static/style.css: component literal"
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "headline",
+        "purpose": "实现中的headline文字角色；数值由DESIGN.md frontmatter规范。",
+        "source": "static/style.css"
+      },
+      "section": {
+        "displayName": "section",
+        "purpose": "实现中的section文字角色；数值由DESIGN.md frontmatter规范。",
+        "source": "static/style.css"
+      },
+      "title": {
+        "displayName": "title",
+        "purpose": "实现中的title文字角色；数值由DESIGN.md frontmatter规范。",
+        "source": "static/style.css"
+      },
+      "body": {
+        "displayName": "body",
+        "purpose": "实现中的body文字角色；数值由DESIGN.md frontmatter规范。",
+        "source": "static/style.css"
+      },
+      "label": {
+        "displayName": "label",
+        "purpose": "实现中的label文字角色；数值由DESIGN.md frontmatter规范。",
+        "source": "static/style.css"
+      },
+      "button": {
+        "displayName": "button",
+        "purpose": "实现中的button文字角色；数值由DESIGN.md frontmatter规范。",
+        "source": "static/style.css"
+      }
+    },
+    "shadows": [
+      {
+        "name": "evidence-drawer",
+        "value": "-12px 0 40px #172b4d1f",
+        "purpose": "模态来源抽屉与工作面区分",
+        "source": "static/style.css: dialog"
+      }
+    ],
+    "motion": [
+      {
+        "name": "button-state",
+        "value": "background .15s,border-color .15s",
+        "purpose": "按钮背景及边框状态变化",
+        "source": "static/style.css: button,.button"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}",
+        "purpose": "尊重减少动态效果偏好",
+        "source": "static/style.css"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1600px",
+        "query": "min-width",
+        "purpose": "增大主内容水平内边距"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1100px",
+        "query": "max-width",
+        "purpose": "缩紧侧栏及间距"
+      },
+      {
+        "name": "top-navigation",
+        "value": "800px",
+        "query": "max-width",
+        "purpose": "顶部导航、单列内容、手机图表"
+      },
+      {
+        "name": "phone",
+        "value": "480px",
+        "query": "max-width",
+        "purpose": "单列表单、全宽抽屉"
+      },
+      {
+        "name": "print-preview-phone",
+        "value": "600px",
+        "query": "max-width",
+        "purpose": "独立打印预览字号与边距",
+        "source": "static/report.css"
+      }
+    ],
+    "focus": {
+      "value": "2px solid var(--accent)",
+      "offset": "3px",
+      "chartOffset": "6px",
+      "source": "static/style.css: :focus-visible,.chart-bar:focus-visible"
+    },
+    "responsiveRules": {
+      "sidebarDesktop": "208px",
+      "sidebarCompact": "184px",
+      "mainMaxWidth": "1440px",
+      "tableMaxHeight": "560px",
+      "provenanceMinWidth": "720px",
+      "provenanceLastCellMinWidth": "156px",
+      "provenanceActionWhiteSpace": "nowrap",
+      "drawerWidth": "480px",
+      "drawerPhoneWidth": "100%",
+      "source": "static/style.css"
+    },
+    "provenance": {
+      "mode": "scan",
+      "sources": [
+        "static/index.html",
+        "static/style.css",
+        "static/app.js",
+        "static/report.css"
+      ],
+      "primitivesOwner": "DESIGN.md YAML frontmatter",
+      "archivedDesign": "archive/ui-before-20261121-DESIGN.md",
+      "tonalRamps": "No additional ramp is defined in source; no synthetic unimplemented colors generated.",
+      "verificationLimits": [
+        "No additional browser run or business-data mutation by documentation pass.",
+        "No new model call; current call budget is zero.",
+        "No screen-reader or physical-print-pagination certification."
+      ]
+    }
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "主操作；状态、焦点与减少动态效果对应当前实现。",
+      "html": "<button class=\"ds-primary\">开始研究</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:7px 13px;border:1px solid #cdd4de;border-radius:var(--radius,6px);background:#fff;color:var(--ink,#202936);cursor:pointer;white-space:nowrap;font:13px/1.5 \"Segoe UI\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif;transition:background .15s,border-color .15s;background:var(--accent,#234c95);border-color:var(--accent,#234c95);color:white}.ds-primary:hover{background:var(--accent-hover,#193b79);border-color:var(--accent-hover,#193b79);color:white}.ds-primary:active{background:#e4eaf2}.ds-primary:disabled{background:#f0f2f5;color:#717b88;border-color:var(--line,#e1e5eb);cursor:not-allowed}.ds-primary:focus-visible{outline:2px solid var(--accent,#234c95);outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none!important}}",
+      "source": "static/style.css: button,.primary"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "获取年报、文件操作与次级按钮。",
+      "html": "<button class=\"ds-secondary\">文件详情</button>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:7px 13px;border:1px solid #cdd4de;border-radius:var(--radius,6px);background:#fff;color:var(--ink,#202936);cursor:pointer;white-space:nowrap;font:13px/1.5 \"Segoe UI\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif;transition:background .15s,border-color .15s;}.ds-secondary:hover{background:#f0f3f7;border-color:#acb8c9}.ds-secondary:active{background:#e4eaf2}.ds-secondary:disabled{background:#f0f2f5;color:#717b88;border-color:var(--line,#e1e5eb);cursor:not-allowed}.ds-secondary:focus-visible{outline:2px solid var(--accent,#234c95);outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-secondary{transition:none!important}}",
+      "source": "static/style.css: button,.button"
+    },
+    {
+      "name": "Evidence text button",
+      "kind": "button",
+      "description": "局部文字操作；来源表变体保持完整单行。",
+      "html": "<button class=\"ds-evidence\">PDF第63页 · 查看来源</button>",
+      "css": ".ds-evidence{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:7px 13px;border:1px solid #cdd4de;border-radius:var(--radius,6px);background:#fff;color:var(--ink,#202936);cursor:pointer;white-space:nowrap;font:13px/1.5 \"Segoe UI\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif;transition:background .15s,border-color .15s;border:0;background:none;color:var(--accent,#234c95);font-size:12px;min-height:30px;padding:3px 0;white-space:nowrap;text-align:left;justify-content:flex-start}.ds-evidence:hover{text-decoration:underline;background:transparent;color:var(--accent-hover,#193b79)}.ds-evidence:focus-visible{outline:2px solid var(--accent,#234c95);outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-evidence{transition:none!important}}",
+      "source": "static/style.css: .text-button,.provenance-table .text-button"
+    },
+    {
+      "name": "Labeled input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "标签在上方；示例为项目实际研究公司字段。",
+      "html": "<label class=\"ds-label\">公司 A<input class=\"ds-input\" value=\"贵州茅台\" required></label>",
+      "css": ".ds-label{display:grid;gap:6px;font:500 12px/1.65 \"Segoe UI\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif;color:var(--ink,#202936);margin:0 0 14px}.ds-input{width:100%;min-height:38px;background:white;color:var(--ink,#202936);border:1px solid #cdd4de;border-radius:5px;padding:8px 10px;font:400 13px/1.65 \"Segoe UI\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif;caret-color:var(--accent,#234c95)}.ds-input::placeholder{color:#6d7786}.ds-input:focus-visible{outline:2px solid var(--accent,#234c95);outline-offset:3px}",
+      "source": "static/style.css: label,input; static/app.js: newForm"
+    },
+    {
+      "name": "Primary navigation",
+      "kind": "nav",
+      "description": "白色侧栏内导航；窄屏改横向下划线。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"主导航\"><a href=\"#home\">首页</a><a href=\"#studies\" aria-current=\"page\">我的研究</a><a href=\"#reports\">报告</a></nav>",
+      "css": ".ds-nav{display:grid;gap:5px;font-family:\"Segoe UI\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif}.ds-nav a{padding:10px 12px;text-decoration:none;color:var(--muted,#5b6575);border-radius:5px;font-size:14px;font-weight:500;line-height:1.65}.ds-nav a:hover{background:#f5f7fa;color:var(--ink,#202936)}.ds-nav a[aria-current]{background:var(--soft,#eef3fb);color:var(--accent,#234c95)}.ds-nav a:focus-visible{outline:2px solid var(--accent,#234c95);outline-offset:3px}@media(max-width:800px){.ds-nav{display:flex;gap:18px;margin-top:14px}.ds-nav a{border-radius:0;padding:8px 1px;border-bottom:2px solid transparent;font-size:13px}.ds-nav a[aria-current]{background:none;border-color:var(--accent,#234c95)}}",
+      "source": "static/index.html: 主导航; static/style.css: .sidebar nav"
+    },
+    {
+      "name": "Status tags",
+      "kind": "chip",
+      "refersTo": "status",
+      "description": "非操作标签；颜色与状态文字并用。",
+      "html": "<span class=\"ds-status\">研究初稿</span> <span class=\"ds-status ds-warn\">待人工核对</span> <span class=\"ds-status ds-good\">人工已确认</span>",
+      "css": ".ds-status{display:inline-flex;align-items:center;border-radius:4px;padding:2px 7px;background:#edf0f5;color:#536174;font:11px/1.7 \"Segoe UI\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif;white-space:nowrap}.ds-status.ds-warn{background:#fbf2e3;color:var(--warning,#855616)}.ds-status.ds-good{background:#edf5ef;color:#366246}.ds-status.ds-bad{background:#fbecec;color:var(--danger,#a63030)}",
+      "source": "static/style.css: .status,.status.good,.status.warn,.status.bad"
+    },
+    {
+      "name": "Analysis panel",
+      "kind": "card",
+      "refersTo": "analysis-panel",
+      "description": "白色平面分析容器，以细线分层。",
+      "html": "<section class=\"ds-panel\"><h3>财务对比</h3><p>金额：亿元 · 合并 / CNY</p></section>",
+      "css": ".ds-panel{background:white;color:var(--ink,#202936);border:1px solid var(--line,#e1e5eb);border-radius:8px;padding:20px 24px;font:14px/1.65 \"Segoe UI\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif}.ds-panel h3{margin:0;font-size:14px;font-weight:650;line-height:1.55}.ds-panel p{color:var(--muted,#5b6575);font-size:11px;text-align:center;margin:7px auto 13px;max-width:75ch}@media(max-width:800px){.ds-panel{padding:18px}}@media(max-width:480px){.ds-panel{padding:15px}}",
+      "source": "static/style.css: .analysis-panel,h3,p"
+    },
+    {
+      "name": "Traceable financial value",
+      "kind": "custom",
+      "description": "点状下划线提示可查看来源；实际金额保持等宽数字。",
+      "html": "<button class=\"ds-value\" aria-label=\"查看财务指标的来源\">—</button>",
+      "css": ".ds-value{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:7px 13px;border:1px solid #cdd4de;border-radius:var(--radius,6px);background:#fff;color:var(--ink,#202936);cursor:pointer;white-space:nowrap;font:13px/1.5 \"Segoe UI\",\"Microsoft YaHei\",\"PingFang SC\",sans-serif;transition:background .15s,border-color .15s;border:0;background:none;border-radius:3px;padding:2px 0;min-height:28px;font-size:13px;font-variant-numeric:tabular-nums;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#a6b3c6;text-underline-offset:5px}.ds-value:hover{color:var(--accent,#234c95);background:var(--soft,#eef3fb)}.ds-value:focus-visible{outline:2px solid var(--accent,#234c95);outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-value{transition:none!important}}",
+      "source": "static/style.css: .data-value; static/app.js: metricButton"
+    }
+  ],
+  "narrative": {
+    "northStar": "可追溯的金融研究工作台",
+    "overview": "Operate 模式：供金融专业学生、研究实习生和初级分析人员连续阅读、比较财务表格并核对来源。采用用户确定的白、灰、深蓝专业金融 SaaS 方向，以名称、文本和数据组织界面；不依赖装饰图片或复制参考产品的品牌资产。\n\n白色工作面置于浅灰画布，深蓝标记主操作、当前位置和证据入口。细线分隔与紧凑排版保持数据密度；首页、列表、研究工作区与报告预览属于同一视觉系统。本文为实现扫描结果，来源为 `static/index.html`、`static/style.css`、`static/app.js`；旧版绿色侧栏规范保存在 `archive/ui-before-20261121-DESIGN.md`。",
+    "keyCharacteristics": [
+      "白灰工作面、克制深蓝与清晰边界。",
+      "紧凑表格、右对齐金额和等宽数字。",
+      "状态使用文字，来源入口就近可见。",
+      "系统中文字体、键盘焦点与窄屏重排。"
+    ],
+    "rules": [
+      {
+        "name": "The Meaning Before Color Rule",
+        "body": "状态必须保留明确文字；公司对比色不得解释为涨跌、投资评级或收益预测。",
+        "section": "colors"
+      },
+      {
+        "name": "The Exact Value Rule",
+        "body": "不为视觉整齐改写财务值；缺失值显示破折号，原始金额、页面亿元和比例单位必须可辨认。",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Work Surface Rule",
+        "body": "普通内容不增加浮动投影；深度用于正在核验的覆盖面板。",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** 使用同一研究上下文串联概览、比较、来源核验和报告。",
+      "**Do** 保留金额单位、报告期、合并口径、来源和 AI 初稿状态。",
+      "**Do** 让表格在自身容器内滚动，并提供可见键盘焦点。",
+      "**Do** 为等待、失败、缺数据和未生成内容提供明确文字与下一步。"
+    ],
+    "donts": [
+      "**Don't** 加入渐变、装饰图片、大圆角胶囊或膨胀的指标卡片。",
+      "**Don't** 用红绿替代公司身份、用颜色替代核验文字。",
+      "**Don't** 把历史年报柱形画成连续行情走势，或暗示实时行情已接入。",
+      "**Don't** 将固定公式、既有 AI 初稿和人工已确认结论混为一种可信状态。"
+    ]
+  }
+}
