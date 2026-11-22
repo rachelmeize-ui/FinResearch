@@ -24,6 +24,7 @@ jobs:
           node --check static/app.js
           node --check static/home.js
           node --check static/dashboard.js
+          node --check static/finance-chart.js
           node --check static/research-engine-ui.js
   server-image:
     runs-on: ubuntu-latest

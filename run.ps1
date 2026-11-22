@@ -1,4 +1,4 @@
-param([ValidateSet('Start','Test','Browser','HomeBrowser','DashboardBrowser','CheckExport')][string]$Mode='Start',[int]$Port=8530)
+param([ValidateSet('Start','Test','Browser','HomeBrowser','DashboardBrowser','FinanceBrowser','CheckExport')][string]$Mode='Start',[int]$Port=8530)
 $ErrorActionPreference='Stop'
 Set-Location -LiteralPath $PSScriptRoot
 $configPath=Join-Path $PSScriptRoot 'runtime.local.json'
@@ -10,6 +10,7 @@ switch($Mode){
  'Browser' { if(-not $config){throw '需要 runtime.local.json 配置 Node 与依赖路径。'}; & $config.node scripts/browser_engine_v3.mjs }
  'HomeBrowser' { if(-not $config){throw '需要 runtime.local.json 配置 Node 与依赖路径。'}; & $config.node scripts/browser_home_ui.mjs }
  'DashboardBrowser' { if(-not $config){throw '需要 runtime.local.json 配置 Node 与依赖路径。'}; & $config.node scripts/browser_dashboard.mjs }
+ 'FinanceBrowser' { if(-not $config){throw '需要 runtime.local.json 配置 Node 与依赖路径。'}; & $config.node scripts/browser_finance_chart.mjs }
  'CheckExport' { & $pythonExe scripts/verify_real_export.py }
 }
 exit $LASTEXITCODE
