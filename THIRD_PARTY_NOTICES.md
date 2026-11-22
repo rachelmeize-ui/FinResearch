@@ -11,5 +11,6 @@
 - Node.js：MIT 及其第三方通知。
 - @oai/artifact-tool：桌面环境提供，按其分发条款使用；不复制包源码，不宣称该包为个人作品或开源组件。移机使用须有可用的合法运行环境。
 - Playwright：Apache-2.0；只用于开发测试，浏览器为本机 Chrome（其许可由安装方管理）。
+- Apache ECharts 6.1.0：Apache-2.0，用于首页交互式SVG图表。本地发布包来自官方npm包并校验SHA-512；原始LICENSE与NOTICE保留在static/vendor。该组件不提供金融数据，也不作为研究引擎。https://github.com/apache/echarts/releases/tag/6.1.0 。
 
 财务计算解释参考美国 SEC 财务报表入门材料：https://www.sec.gov/about/reports-publications/beginners-guide-financial-statements 。本项目采用年度、合并、人民币的有限口径，不构成会计准则适用性或投资建议。该参考没有作为茅台、五粮液数值来源；示例数值均人为构造。

@@ -17,14 +17,14 @@ let logs='',browser,page;const results=[],errors=[];
 server.stderr.on('data',buffer=>logs+=buffer);server.stdout.on('data',buffer=>logs+=buffer);
 const api=async url=>(await fetch(base+url)).json();
 async function test(name,kind,fn){await fn();results.push({name,kind,status:'passed'});console.log('PASS '+name);}
-async function home(){await page.goto(base+'/#home');await page.locator('#new-form').waitFor();}
+async function home(){await page.goto(base+'/#home');await page.locator('#new-form').waitFor({state:'attached'});if(!await page.locator('#new-form').isVisible())await page.locator('[data-home-action=create]').click();await page.locator('#new-form').waitFor();}
 const submit=()=>page.locator('#new-form button[type=submit]');
 async function screenshot(name,fullPage=true){await page.screenshot({path:images+'/'+name+'.png',fullPage});}
 
 try {
   for(let n=0;n<100;n++){try{if((await fetch(base+'/healthz')).ok)break;}catch{}await new Promise(r=>setTimeout(r,100));}
   browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
-  page=await browser.newPage({viewport:{width:1440,height:900},acceptDownloads:true});page.on('pageerror',e=>errors.push(e.message));
+  page=await browser.newPage({viewport:{width:1440,height:900},acceptDownloads:true,reducedMotion:'reduce'});page.on('pageerror',e=>errors.push(e.message));
   await test('首页以空白问题开始，最近研究读取真实保存任务','real browser / existing data',async()=>{
     await home();assert.equal(await page.locator('[name=question]').inputValue(),'');assert.equal(await page.locator('[name=company_a]').inputValue(),'');
     assert.ok(await page.locator('[name=company_b]').isDisabled());
@@ -107,11 +107,11 @@ try {
     assert.match(await fs.readFile(out+'/created-study.md','utf8'),/2023—2025/);assert.equal((await fs.readFile(out+'/created-study.xlsx')).subarray(0,2).toString(),'PK');
     await home();assert.equal(await page.locator('[name=question]').inputValue(),'');assert.equal(await page.locator('.home-study-row .study-title').first().getAttribute('href'),'#research/'+createdId);
   });
-  await test('390px首屏包含提交按钮，360/390/768无横向溢出','real browser / responsive',async()=>{
+  await test('390px首屏有新建研究入口，表单可打开，360/390/768无横向溢出','real browser / responsive',async()=>{
     for(const [width,height] of [[390,844],[360,800],[768,1024]]){
       await page.setViewportSize({width,height});await page.evaluate(()=>scrollTo(0,0));
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'page overflow at '+width);
-      if(width===390){const box=await submit().boundingBox();assert.ok(box.y+box.height<=height,JSON.stringify(box));await screenshot('after-home-390');await screenshot('after-home-390-viewport',false);}
+      if(width===390){const box=await page.locator('[data-home-action=create]').boundingBox();assert.ok(box.y+box.height<=height,JSON.stringify(box));await page.locator('[data-home-action=create]').click();await submit().scrollIntoViewIfNeeded();assert.ok(await submit().isVisible());await screenshot('after-home-390');await screenshot('after-home-390-viewport',false);}
       if(width===768)await screenshot('after-home-768');
     }
   });

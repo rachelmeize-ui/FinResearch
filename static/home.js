@@ -62,7 +62,8 @@ window.FinResearchHome = (() => {
   }
 
   function render(tasks) {
-    return `<div class="home-heading"><h1>从一个问题，开始公司研究</h1><p>从公开资料到对比与报告，保留每一步证据。</p></div>${form()}<section class="home-recent" aria-labelledby="recent-title"><div class="section-heading"><h2 id="recent-title">最近研究</h2><a href="#studies">查看全部研究</a></div>${recent(tasks)}</section>`;
+    const data=FinResearchDashboard.hasData(tasks),hasDraft=Boolean(draft.question||draft.company_a);
+    return `<div class="dashboard-heading"><div><h1>公司研究看板</h1><p>财务报表、年度比较与来源核验，集中在一个工作台。</p></div><button type="button" class="primary" data-home-action="create">新建研究</button></div>${FinResearchDashboard.view(tasks)}<details id="home-create-panel" class="home-create-panel" ${!data||hasDraft?'open':''}><summary>从一个问题，开始新研究<span>填写对象与年度，查找真实公开资料</span></summary>${form()}</details><section class="home-recent" aria-labelledby="recent-title"><div class="section-heading"><h2 id="recent-title">最近研究</h2><a href="#studies">查看全部研究</a></div>${recent(tasks)}</section>`;
   }
 
   function capture(f) {
@@ -94,6 +95,9 @@ window.FinResearchHome = (() => {
 
   document.addEventListener('click',e=>{
     const button=e.target.closest('[data-home-action]');if(!button)return;
+    if(button.dataset.homeAction==='create'){
+      const panel=document.querySelector('#home-create-panel');panel.open=true;panel.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});document.querySelector('#research-question').focus({preventScroll:true});return;
+    }
     const f=button.form;
     if (button.dataset.homeAction==='compare') {
       draft.comparison=!draft.comparison;update(f);

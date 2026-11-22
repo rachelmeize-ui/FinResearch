@@ -44,7 +44,11 @@ def extract_cn(pages,doc,company,years):
    compact=re.sub(r'\s+','',block[:1800])
    year_columns=str(year) in compact and str(year-1) in compact
    balance_columns=kind=='balance' and f'{year}年12月31日' in compact and '期末余额' in compact and '期初余额' in compact
-   if not (year_columns or balance_columns):continue
+   # Older annual statements label current/prior periods instead of repeating year numbers.
+   # Bind those columns only inside a verified annual-report title, never quarterly reports.
+   period_columns=kind=='income' and bool(re.search(str(year)+r'年?年度报告',clean(doc.get('title','')))) and any(k in compact for k in ['本期发生额','本年发生额']) and any(k in compact for k in ['上期发生额','上年发生额'])
+   if not (year_columns or balance_columns or period_columns):continue
+   column_rule=f'当期/上期表头按已识别的{year}年度报告映射为{year}/{year-1}' if period_columns and not year_columns else '按表头明确年度或资产负债表期末/期初日期映射'
    unit_match=re.search(r'(?:单位\s*[:：]|金额单位为)\s*(?:人民币)?\s*(亿元|万元|千元|元)',block[:1600])
    if not unit_match:continue
    unit=unit_match[1]
@@ -64,7 +68,7 @@ def extract_cn(pages,doc,company,years):
      before=block[:m.start()];page=i+1+before.count('\n\f')
      # Locate the exact field on its actual PDF page, including statements continuing on next pages.
      page=next((j+1 for j in range(i,min(i+4,len(pages))) if re.search(r'(?m)^\s*'+PATTERNS[key],pages[j])),i+1)
-     found[key]=(vals,dict(field=key,label=LABELS[key],page=page,quote=quote,url=doc['url'],report_year=year,unit=unit,currency='CNY',scope='合并',sha256=doc['sha256'],document_id=doc['id'],version=doc.get('versions_status','原披露版')))
+     found[key]=(vals,dict(field=key,label=LABELS[key],page=page,quote=quote,url=doc['url'],report_year=year,unit=unit,currency='CNY',scope='合并',sha256=doc['sha256'],document_id=doc['id'],version=doc.get('versions_status','原披露版'),column_rule=column_rule))
      break
    if len(found)==len(keys):
     for k,(v,p) in found.items():result[k]=v;field_evidence[k]=p
