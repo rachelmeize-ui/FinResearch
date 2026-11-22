@@ -28,14 +28,16 @@ def fetch(url,data=None,refresh=False,limit=25_000_000,timeout=25):
   immutable=CACHE/(meta['sha256']+'.bin')
   if not immutable.exists():immutable.write_bytes(raw)
   return raw,{**meta,'filename':immutable.name,'cached':True,'retrieval_method':'已获取真实资料缓存'}
- req=urllib.request.Request(url,data=encoded,headers={'User-Agent':'FinResearch/0.3 academic research workspace','Referer':'https://www.cninfo.com.cn/','Accept':'application/json,text/html,application/pdf,*/*'})
+ origin=urllib.parse.urlsplit(url)
+ referer='https://www.cninfo.com.cn/' if origin.hostname=='www.cninfo.com.cn' or (origin.hostname or '').endswith('.cninfo.com.cn') else f'https://{origin.netloc}/'
+ req=urllib.request.Request(url,data=encoded,headers={'User-Agent':'FinResearch/0.3 academic research workspace','Referer':referer,'Accept':'application/json,text/html,application/pdf,*/*'})
  try:
   with urllib.request.build_opener(Redirect()).open(req,timeout=timeout) as r:
    start=time.monotonic();chunks=[];size=0
    while True:
     remaining=timeout-(time.monotonic()-start)
     if remaining<=0:raise TimeoutError('total download deadline')
-    try:r.fp.raw._sock.settimeout(min(5,remaining))
+    try:r.fp.raw._sock.settimeout(min(15 if timeout>25 else 5,remaining))
     except AttributeError:pass
     chunk=r.read1(min(65536,limit+1-size))
     if not chunk:break

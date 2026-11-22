@@ -1,5 +1,6 @@
 # Core HTTP server, SQLite, CSV and unittest use Python stdlib.
 openpyxl>=3.1,<4
 pypdf>=5
+pdfplumber>=0.11,<1
 xlsxwriter>=3.2,<4
 # Excel export: Node >=22 with @oai/artifact-tool (see README)

@@ -176,6 +176,7 @@ def launch(ident,kind,refresh=False):
             if kind=='collect':collect_job(ident,jid,refresh)
             else:model_job(ident,jid)
             stage=('公开资料与财务分析已就绪' if periods.coverage(detail(ident))['complete'] else '已取得部分年度，所选研究期间尚未覆盖完整') if kind=='collect' else '真实模型研究完成'
+            if kind=='collect' and detail(ident)['meta'].get('effective_type') in ['business','industry']:stage=detail(ident)['meta']['engine_state']
             with db() as c:c.execute('UPDATE jobs SET status=?,stage=?,finished_at=? WHERE id=?',('succeeded',stage,now(),jid))
         except Exception as error:
             if not isinstance(error,ValueError):

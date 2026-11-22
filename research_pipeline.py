@@ -78,8 +78,9 @@ def run(ident,job_id,refresh=False):
     for year in years:attempt(ident,dict(stage='年度报告',company=entity['name'],year=year,status='未适配',reason='已识别上市主体，但该市场财报解析适配尚未完成；请上传年报或财务表。'))
   else:
    progress('根据研究问题查找'+entity['name']+'公开业务资料')
-   docs,record=business_research.discover(entity,t['question'],years,refresh)
+   docs,record=business_research.discover(entity,t['question'],years,refresh,progress)
    for d in docs:documents.append(save_document(ident,d))
+   record['reason']='；'.join([f.get('reason','') for f in record.get('failures',[])]+[str(a['year'])+'年：'+a.get('reason','') for a in record.get('annual_attempts',[]) if a['status']!='已下载并提取正文'])
    attempt(ident,dict(stage='业务资料检索',company=entity['name'],status='已取得公开资料' if docs else '资料不足',**{k:v for k,v in record.items() if k!='company'}))
  if effective=='financial':
   if not all_rows:
@@ -99,5 +100,7 @@ def run(ident,job_id,refresh=False):
    engine.meta_update(c,ident,entities=resolved,collection=documents,active_source_ids=source_ids,version_differences=changes,engine_state='财务分析就绪' if periods.coverage(imported)['complete'] else '已取得部分年度数据',last_error='')
  else:
   cards=business_research.evidence_cards(documents,t['question'],names,effective)
-  with db() as c:engine.meta_update(c,ident,collection=documents,business_cards=cards,engine_state='公开业务资料已整理，待人工核验' if any(c['quote'] for c in cards) else '资料不足',last_error='')
+  missing=sum(not card['quote'] for card in cards)
+  with db() as c:engine.meta_update(c,ident,collection=documents,business_cards=cards,engine_state=('公开业务资料已整理，仍有信息缺口' if missing else '公开业务资料已整理，待人工核验') if any(c['quote'] for c in cards) else '资料不足',last_error='')
+  if not any(c['quote'] for c in cards):raise SourceError('本次未取得能回答研究维度的正文证据。请检查官网定位、搜索与下载记录，或补充官方资料网址后重试。')
  with db() as c:log(c,'task',ident,'通用公开资料流程完成',None,dict(research_type=effective,companies=names,requested_years=years,documents=len(documents),financial_rows=len(all_rows),paid_model_calls=0))
